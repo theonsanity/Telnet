@@ -1,4 +1,18 @@
 import getpass
 import telnetlib
 
-HOST = 
+% put your ip address instead of localhost
+HOST = "localhost"
+user = raw_input("Enter your telnet username: ")
+password = getpass.getpass()
+
+tn = telnetlib.Telnet(HOST)
+
+tn.read_until(b"Username ")
+tn.write(user.encode('ascii') + b"\n")
+if password:
+    tn.read_until("Password: ")
+    tn.write(password + "\n")
+
+tn.write("exit\n")
+print (tn.read_all().encode('ascii'))
